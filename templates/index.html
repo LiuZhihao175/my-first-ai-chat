@@ -1,0 +1,82 @@
+<html>
+
+<head>
+    <title>AI Chat Website</title>
+</head>
+
+<body style="
+    font-family: Arial;
+    background:#343541;
+    padding:30px;
+    color:white;
+">
+
+    <h1>My AI Chat Website</h1>
+
+    <div id="chat-box" style="
+        background:#202123;
+        padding:20px;
+        border-radius:10px;
+        min-height:400px;
+        max-height:500px;
+        overflow-y:auto;
+    ">
+
+        {{ messages_html|safe }}
+
+    </div>
+
+    <br>
+
+    <form method="POST" id="chat-form">
+
+        <input 
+            type="text"
+            name="user_input"
+            placeholder="Type your message..."
+            style="
+                width:70%;
+                padding:12px;
+                border-radius:10px;
+                border:1px solid gray;
+            "
+        >
+
+        <button
+            type="submit"
+            style="
+                padding:12px 20px;
+                border:none;
+                border-radius:10px;
+                background:#19C37D;
+                color:white;
+            "
+        >
+            Send
+        </button>
+
+    </form>
+
+    <script>
+
+    const form = document.getElementById("chat-form");
+
+    document.addEventListener("keydown", function(event) {
+
+        if (event.key === "Enter") {
+
+            event.preventDefault();
+
+            form.submit();
+        }
+
+    });
+
+    const chatBox = document.getElementById("chat-box");
+
+    chatBox.scrollTop = chatBox.scrollHeight;
+
+    </script>
+
+</body>
+</html>
