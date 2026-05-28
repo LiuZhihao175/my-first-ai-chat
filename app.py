@@ -1,11 +1,6 @@
 from flask import Flask, request
-from openai import OpenAI
 
 app = Flask(__name__)
-
-client = OpenAI(
-   api_key=""
-)
 
 chat_history = []
 
@@ -21,17 +16,7 @@ def home():
             "message": user_input
         })
 
-        response = client.chat.completions.create(
-            model="gpt-3.5-turbo",
-            messages=[
-                {
-                    "role": "user",
-                    "content": user_input
-                }
-            ]
-        )
-
-        ai_reply = response.choices[0].message.content
+        ai_reply = "Hello! I am your AI assistant."
 
         chat_history.append({
             "sender": "AI",
@@ -58,6 +43,7 @@ def home():
                 padding:12px;
                 border-radius:12px;
                 max-width:300px;
+                color:black;
             ">
                 <b>{chat["sender"]}</b><br>
                 {chat["message"]}
@@ -74,18 +60,21 @@ def home():
 
     <body style="
         font-family: Arial;
-        background:#ECE5DD;
+        background:#343541;
         padding:30px;
+        color:white;
     ">
 
         <h1>My AI Chat Website</h1>
 
-        <div style="
-            background:white;
-            padding:20px;
-            border-radius:10px;
-            min-height:400px;
-        ">
+       <div id="chat-box" style="
+    background:#444654;
+    padding:20px;
+    border-radius:10px;
+    min-height:400px;
+    max-height:500px;
+    overflow-y:auto;
+">
 
             {messages_html}
 
@@ -93,7 +82,7 @@ def home():
 
         <br>
 
-        <form method="POST">
+        <form method="POST" id="chat-form">
 
             <input 
                 type="text"
@@ -121,6 +110,25 @@ def home():
             </button>
 
         </form>
+
+        <script>
+
+        const form = document.getElementById("chat-form");
+
+        document.addEventListener("keydown", function(event) {{
+
+            if (event.key === "Enter") {{
+
+                event.preventDefault();
+
+                form.submit();
+            }}
+
+        }});
+const chatBox = document.getElementById("chat-box");
+
+chatBox.scrollTop = chatBox.scrollHeight;
+        </script>
 
     </body>
     </html>
